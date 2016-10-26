@@ -1,0 +1,30 @@
+{
+  "name": "lightbikes",
+  "version": "1.0.0",
+  "description": "A lightbike client/server game",
+  "main": "app.js",
+  "scripts": {
+    "build": "browserify client/src/client.js -o client/lightbikes.js",
+    "watch": "watchify client/src/client.js -o client/lightbikes.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CIS580/lightbikes.git"
+  },
+  "keywords": [
+    "lightbikes",
+    "node",
+    "game"
+  ],
+  "author": "Nathan H. Bean",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/CIS580/lightbikes/issues"
+  },
+  "homepage": "https://github.com/CIS580/lightbikes#readme",
+  "dependencies": {
+    "socket.io": "^1.5.1"
+  }
+}
