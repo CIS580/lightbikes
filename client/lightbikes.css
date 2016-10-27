@@ -1,6 +1,21 @@
-canvas {
-  width: 760px;
-  height: 480px;
+#wrapper {
+  position: relative;
+  width: 500px;
+  height: 500px;
   border: 2px solid black;
   box-shadow: gray 2px 2px 2px;
+}
+
+#screen {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+}
+
+#message {
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  text-align: center;
+  font-size: 30pt;
 }

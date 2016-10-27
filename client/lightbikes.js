@@ -1,8 +1,14 @@
-window.onload = function(){
+// Start the game after all files have loaded
+window.onload = function() {
+
+  // Global variables
   var canvas = document.getElementById('screen');
+  var message = document.getElementById('message');
   var ctx = canvas.getContext('2d');
   var socket = io();
-  var colors = ['red', 'blue']
+  var colors = [];
+  colors[1] = 'red';
+  colors[2] = 'blue';
 
   // Fill the canvas with gray background
   ctx.fillStyle = 'gray';
@@ -14,70 +20,55 @@ window.onload = function(){
     ctx.fillRect(5 * move.x, 5 * move.y, 5, 5);
   });
 
-  // TODO: Handle disconnected event
-  // TODO: Handle victory
-  // TODO: Handle loss
+  // Handle game on events
+  socket.on('game on', function() {
+    message.style.display = 'none';
+  });
 
-  var input = {
-    up: false,
-    down: false,
-    left: false,
-    right: false
-  }
+  // Handle disconnected event
+  socket.on('player left', function() {
+    message.innerHTML = 'Player Left...';
+    message.style.display = 'block';
+  });
 
+  // Handle victory
+  socket.on('victory', function() {
+    message.innerHTML = 'You win!';
+    message.style.display = 'block';
+  });
+
+  // Handle loss
+  socket.on('defeat', function() {
+    message.innerHTML = 'You loose!';
+    message.style.display = 'block';
+  });
+
+  // Handle key presses by sending a message to the
+  // server with our new direction
   window.onkeydown = function(event) {
     event.preventDefault();
     switch(event.keyCode) {
       // UP
       case 38:
       case 87:
-        input.up = true;
+        socket.emit('steer', 'up');
         break;
       // LEFT
       case 37:
       case 65:
-        input.left = true;
+        socket.emit('steer', 'left');
         break;
       // RIGHT
       case 39:
       case 68:
-        input.right = true;
+        socket.emit('steer', 'right');
         break;
       // DOWN
       case 40:
       case 83:
-        input.down = true;
+        socket.emit('steer', 'down');
         break;
     }
-    // Send the updated input to the server
-    socket.emit('input', input);
   }
 
-  window.onkeyup  = function(event) {
-    event.preventDefault();
-    switch(event.keyCode) {
-      // UP
-      case 38:
-      case 87:
-        input.up = false;
-        break;
-      // LEFT
-      case 37:
-      case 65:
-        input.left = false;
-        break;
-      // RIGHT
-      case 39:
-      case 68:
-        input.right = false;
-        break;
-      // DOWN
-      case 40:
-      case 83:
-        input.down = false;
-        break;
-    }
-    // Send the updated input to the server
-    socket.emit('input', input);
-  }
 }
