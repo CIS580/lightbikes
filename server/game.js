@@ -99,7 +99,7 @@ Game.prototype.update = function() {
     if(player.x < 0 || player.x > 99 || player.y < 0 || player.y > 99) {
       console.log("went out of bounds");
       player.socket.emit('defeat');
-      otherPlayer.socket.emit('defeat');
+      otherPlayer.socket.emit('victory');
       clearInterval(interval);
     }
 
